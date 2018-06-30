@@ -5,10 +5,10 @@ Bug-Debian: http://bugs.debian.org/759355
 Last-Update: 2014-09-06
 
 diff --git a/libnfc/drivers/acr122_usb.c b/libnfc/drivers/acr122_usb.c
-index 8a16920..3f8a31e 100644
+index a6392e8..377e056 100644
 --- a/libnfc/drivers/acr122_usb.c
 +++ b/libnfc/drivers/acr122_usb.c
-@@ -603,6 +603,7 @@ read:
+@@ -604,6 +604,7 @@ read:
  
    uint8_t attempted_response = RDR_to_PC_DataBlock;
    size_t len;
@@ -16,7 +16,7 @@ index 8a16920..3f8a31e 100644
  
    if (res == NFC_ETIMEOUT) {
      if (DRIVER_DATA(pnd)->abort_flag) {
-@@ -614,7 +615,7 @@ read:
+@@ -615,7 +616,7 @@ read:
        goto read;
      }
    }
@@ -25,7 +25,7 @@ index 8a16920..3f8a31e 100644
      log_put(LOG_GROUP, LOG_CATEGORY, NFC_LOG_PRIORITY_ERROR, "%s", "Invalid RDR_to_PC_DataBlock frame");
      // try to interrupt current device state
      acr122_usb_ack(pnd);
-@@ -629,6 +630,16 @@ read:
+@@ -630,6 +631,16 @@ read:
    offset++;
  
    len = abtRxBuf[offset++];
@@ -42,7 +42,7 @@ index 8a16920..3f8a31e 100644
    if (!((len > 1) && (abtRxBuf[10] == 0xd5))) { // In case we didn't get an immediate answer:
      if (len != 2) {
        log_put(LOG_GROUP, LOG_CATEGORY, NFC_LOG_PRIORITY_ERROR, "%s", "Wrong reply");
-@@ -657,7 +668,7 @@ read:
+@@ -658,7 +669,7 @@ read:
          goto read; // FIXME May cause some trouble on Touchatag, right ?
        }
      }
@@ -51,7 +51,7 @@ index 8a16920..3f8a31e 100644
        // try to interrupt current device state
        acr122_usb_ack(pnd);
        pnd->last_error = NFC_EIO;
-@@ -696,7 +707,7 @@ read:
+@@ -697,7 +708,7 @@ read:
  
    // Skip CCID remaining bytes
    offset += 2; // bSlot and bSeq are not used
